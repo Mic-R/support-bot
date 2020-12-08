@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "support-bot",
+      "cwd": "./",
+      "script": "src/index.js"
+    }
+  ]
+}
