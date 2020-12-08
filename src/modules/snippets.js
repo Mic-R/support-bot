@@ -129,6 +129,8 @@ module.exports = ({ bot, knex, config, commands }) => {
   });
 
   commands.addInboxServerCommand("snippets", [], async (msg, args, thread) => {
+    if (msg.channel.parentID !== config.categoryAutomation.newThread) return
+
     const allSnippets = await snippets.all();
     const triggers = allSnippets.map(s => s.trigger);
     triggers.sort();
