@@ -242,49 +242,20 @@ async function createNewThreadForUser(user, opts = {}) {
     }
 
     // Post some info to the beginning of the new thread
-    const infoHeaderItems = [];
-
-    // Account age
+    const languageRoleIDs = ["696123338774544475","696123340468781136","696123149606977628","696123325344251995","696123339990892584","696123331673587742","696123339063820329","696121533663281205","696139193029492757"]
+    const guildData = userGuildData.get(userGuildData.keys().next().value)
     const accountAge = humanizeDuration(Date.now() - user.createdAt, {largest: 2, round: true});
-    infoHeaderItems.push(`ACCOUNT AGE **${accountAge}**`);
+    const {nickname, joinDate} = getHeaderGuildInfo(guildData.member);
 
-    // User id (and mention, if enabled)
-    if (config.mentionUserInThreadHeader) {
-      infoHeaderItems.push(`ID **${user.id}** (<@!${user.id}>)`);
-    } else {
-      infoHeaderItems.push(`ID **${user.id}**`);
-    }
+    let infoHeader = ""
 
-    let infoHeader = infoHeaderItems.join(", ");
-
-    // Guild member info
-    for (const [guildId, guildData] of userGuildData.entries()) {
-      const {nickname, joinDate} = getHeaderGuildInfo(guildData.member);
-      const headerItems = [
-        `NICKNAME **${utils.escapeMarkdown(nickname)}**`,
-        `JOINED **${joinDate}** ago`
-      ];
-
-      if (guildData.member.voiceState.channelID) {
-        const voiceChannel = guildData.guild.channels.get(guildData.member.voiceState.channelID);
-        if (voiceChannel) {
-          headerItems.push(`VOICE CHANNEL **${utils.escapeMarkdown(voiceChannel.name)}**`);
-        }
-      }
-
-      if (config.rolesInThreadHeader && guildData.member.roles.length) {
-        const roles = guildData.member.roles.map(roleId => guildData.guild.roles.get(roleId)).filter(Boolean);
-        headerItems.push(`ROLES **${roles.map(r => r.name).join(", ")}**`);
-      }
-
-      const headerStr = headerItems.join(", ");
-
-      if (mainGuilds.length === 1) {
-        infoHeader += `\n${headerStr}`;
-      } else {
-        infoHeader += `\n**[${utils.escapeMarkdown(guildData.guild.name)}]** ${headerStr}`;
-      }
-    }
+    infoHeader += `**User:** ${user.username}#${user.discriminator} (${user.id})`;
+    infoHeader += `, **nickname:** ${utils.escapeMarkdown(nickname)}`;
+    infoHeader += `\n**Account age:** ${accountAge}`;
+    infoHeader += `, **joined:** ${joinDate} ago`;
+    const roles = guildData.member.roles.map(roleId => guildData.guild.roles.get(roleId)).filter(Boolean);
+    const languageRoles = roles.filter(r => languageRoleIDs.includes(r.id))
+    infoHeader += `\n**Language roles:** ${languageRoles.map(r => r.name).join(", ")}`;
 
     // Modmail history / previous logs
     const userLogCount = await getClosedThreadCountByUserId(user.id);
