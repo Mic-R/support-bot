@@ -133,7 +133,25 @@ module.exports = ({ bot, knex, config, commands }) => {
     const triggers = allSnippets.map(s => s.trigger);
     triggers.sort();
 
-    utils.postSystemMessageWithFallback(msg.channel, thread, `Available snippets (prefix ${config.snippetPrefix}):\n${triggers.join(", ")}`);
+    const categorizedTriggers = {}
+    for (const trigger of triggers) {
+      const language = (trigger.match(/-([a-z]{2})$/) || [])[1]
+      if (!language) {
+        categorizedTriggers[trigger] = []
+      } else {
+        const noLanguage = trigger.replace(`-${language}`, "")
+        categorizedTriggers[noLanguage].push(language)
+      }
+    }
+
+    let result = ""
+    for (const [trigger, languages] of Object.entries(categorizedTriggers)) {
+      result += `• ${trigger}`
+      if (languages.length) result += ` — ${languages.join(", ")}`
+      result += "\n"
+    }
+
+    utils.postSystemMessageWithFallback(msg.channel, thread, `Available snippets (prefix \`${config.snippetPrefix}\`):\n\n${result}`);
   }, {
     aliases: ["s"]
   });
