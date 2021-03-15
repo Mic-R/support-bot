@@ -222,7 +222,7 @@ Alias for [`serverGreetings`](#serverGreetings)
 If enabled, the bot attempts to ignore common "accidental" messages that would start a new thread, such as "ok", "thanks", etc.
 
 #### inboxServerPermission
-**Default:** *None*  
+**Default:** `manageMessages`  
 **Accepts multiple values.** Permission name, user id, or role id required to use bot commands on the inbox server.
 See ["Permissions" on this page](https://abal.moe/Eris/docs/reference) for supported permission names (e.g. `kickMembers`).
 
@@ -264,10 +264,9 @@ Alias for [mainServerId](#mainServerId)
 Alias for [inboxServerId](#inboxServerId)
 
 #### mentionRole
-**Default:** `here`  
+**Default:** `none`  
 **Accepts multiple values.** Role that is mentioned when new threads are created or the bot is mentioned.
 Accepted values are `none`, `here`, `everyone`, or a role id.
-Requires `pingOnBotMention` to be enabled.
 Set to `none` to disable these pings entirely.
 
 #### mentionUserInThreadHeader
@@ -314,7 +313,7 @@ If enabled, the bot will react to messages sent to it with the emoji defined in 
 #### reactOnSeenEmoji
 **Default:** `📨`  
 The emoji that the bot will react with when it sees a message.  Requires `reactOnSeen` to be enabled.  
-Must be pasted in the config file as the Emoji representation and not as a unicode codepoint.
+Must be pasted in the config file as the Emoji representation and not as a unicode codepoint. Use `emojiName:emojiID` for custom emoji.
 
 #### relaySmallAttachmentsAsAttachments
 **Default:** `off`  
@@ -331,7 +330,8 @@ Required amount of time (in minutes) the user must be a member of the server bef
 
 #### responseMessage
 **Default:** `Thank you for your message! Our mod team will reply to you here as soon as possible.`  
-The bot's response to the user when they message the bot and open a new modmail thread
+The bot's response to the user when they message the bot and open a new modmail thread.  
+If you have a multi-line or otherwise long `responseMessage`, you might want to turn off [showResponseMessageInThreadChannel](#showResponseMessageInThreadChannel) to reduce clutter in the thread channel on the inbox server.
 
 #### rolesInThreadHeader
 **Default:** `off`  
@@ -348,6 +348,11 @@ serverGreetings.541484311354933258.message[] = Welcome to server ID 541484311354
 serverGreetings.541484311354933258.message[] = Second line of the greeting.
 ```
 
+#### showResponseMessageInThreadChannel
+**Default:** `on`  
+Whether to show the [responseMessage](#responseMessage) sent to the user in the thread channel on the inbox server as well.  
+If you have a multi-line or otherwise long `responseMessage`, it might be a good idea to turn this off to reduce clutter.
+
 #### smallAttachmentLimit
 **Default:** `2097152`  
 Size limit of `relaySmallAttachmentsAsAttachments` in bytes (default is 2MB)
@@ -362,7 +367,7 @@ Prefix to use snippets anonymously
 
 #### status
 **Default:** `Message me for help`  
-The bot's status text. Set to an empty value - `status = ""` - to disable.
+The bot's status text. Set to `none` to disable.
 
 #### statusType
 **Default:** `playing`  
@@ -404,6 +409,11 @@ URL to use for attachment and log links. Defaults to `http://IP:PORT`.
 #### useNicknames
 **Default:** `off`  
 If enabled, mod replies will use their nicknames (on the inbox server) instead of their usernames
+
+#### useGitForGitHubPlugins
+**Default:** `off`  
+If enabled, GitHub plugins will be installed with Git rather than by downloading the archive's tarball.  
+This is useful if you are installing plugins from private repositories that require ssh keys for authentication.
 
 ## Advanced options
 
