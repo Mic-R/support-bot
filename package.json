@@ -35,6 +35,7 @@
     "mysql2": "^2.1.0",
     "pacote": "^11.1.11",
     "public-ip": "^4.0.2",
+    "random-unicode-emoji": "^1.0.2",
     "sqlite3": "^5.0.0",
     "tmp": "^0.1.0",
     "transliteration": "^2.1.11",

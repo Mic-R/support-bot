@@ -18,6 +18,7 @@ const {THREAD_STATUS, DISOCRD_CHANNEL_TYPES} = require("./constants");
 
 const MINUTES = 60 * 1000;
 const HOURS = 60 * MINUTES;
+const randomEmoji = require('random-unicode-emoji');
 
 let threadCreationQueue = Promise.resolve();
 
@@ -173,7 +174,7 @@ async function createNewThreadForUser(user, opts = {}) {
     if (cleanName === "") cleanName = "unknown";
     cleanName = cleanName.slice(0, 95); // Make sure the discrim fits
 
-    let channelName = `${cleanName}-${user.discriminator}`;
+    let channelName = `🔴-${cleanName}-${user.discriminator}`;
 
     if (config.anonymizeChannelName) {
       channelName = crypto.createHash("md5").update(channelName + Date.now()).digest("hex").slice(0, 12);
