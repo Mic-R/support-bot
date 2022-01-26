@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "production": "docker build . -t buildtheearth/support-bot && docker run buildtheearth/support-bot",
+    "docker": "docker build . -t buildtheearth/support-bot",
     "watch": "supervisor -n exit -w src --inspect=0.0.0.0:9229 src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src ./db/migrations",
