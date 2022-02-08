@@ -1,0 +1,12 @@
+version: '1'
+services:
+  support-bot-service:
+    image: buildtheearth/support-bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: support-bot
+    volumes:
+      - type: bind
+        source: ./config.ini
+        target: /home/bots/support-bot/config.ini
