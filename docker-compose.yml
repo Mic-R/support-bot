@@ -1,12 +1,15 @@
-version: '1'
+version: "3.9"
+
 services:
-  support-bot-service:
-    image: buildtheearth/support-bot
-    build:
-      context: .
-      dockerfile: Dockerfile
+  support-bot:
     container_name: support-bot
+    image: buildtheearth/support-bot
+    build: 
+    environment:
+        CONFIG_FILE: "/etc/buildtheearth/support-bot/config.ini"
     volumes:
-      - type: bind
-        source: ./config.ini
-        target: /home/bots/support-bot/config.ini
+      - "${CONFIG_FILE}:/etc/buildtheearth/support-bot/config.ini"
+        
+networks:
+  bot-network:
+    external: true
