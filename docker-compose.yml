@@ -4,6 +4,8 @@ services:
   support-bot:
     container_name: support-bot
     image: buildtheearth/support-bot
+    ports:
+      - "8890:8890"
     build: .
     environment:
         CONFIG_FILE: "/etc/buildtheearth/support-bot/config.ini"
