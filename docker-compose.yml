@@ -4,7 +4,7 @@ services:
   support-bot:
     container_name: support-bot
     image: buildtheearth/support-bot
-    build: 
+    build: .
     environment:
         CONFIG_FILE: "/etc/buildtheearth/support-bot/config.ini"
     volumes:
