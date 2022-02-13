@@ -1,7 +1,7 @@
 FROM node:16-alpine3.15
 #Alpine linux my beloved :heart_eyes:
 
-WORKDIR /home/bots/support-bot
+WORKDIR /etc/buildtheearth/support-bot
 
 COPY package*.json ./
 
