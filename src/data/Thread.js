@@ -10,8 +10,7 @@ const { formatters } = require("../formatters");
 const { callAfterThreadCloseHooks } = require("../hooks/afterThreadClose");
 const snippets = require("./snippets");
 const { getModeratorThreadDisplayRoleName } = require("./displayRoles");
-const transliterate = require("transliteration");
-const randomEmoji = require('random-unicode-emoji');
+
 const ThreadMessage = require("./ThreadMessage");
 
 const {THREAD_MESSAGE_TYPE, THREAD_STATUS, DISCORD_MESSAGE_ACTIVITY_TYPES} = require("./constants");
@@ -411,9 +410,6 @@ class Thread {
     if (config.reactOnSeen) {
       await msg.addReaction(config.reactOnSeenEmoji).catch(utils.noop);
     }
-
-    let cleanName = transliterate.slugify(msg.author.username);
-    if ( !bot.getChannel(this.channel_id).name.includes("🔴-")) await bot.getChannel(this.channel_id).edit({name: `🔴-${bot.getChannel(this.channel_id).name}`})
 
     // Interrupt scheduled closing, if in progress
     if (this.scheduled_close_at) {

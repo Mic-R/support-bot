@@ -1,7 +1,6 @@
 const attachments = require("../data/attachments");
 const utils = require("../utils");
 const Thread = require("../data/Thread");
-const transliterate = require("transliteration");
 
 module.exports = ({ bot, knex, config, commands }) => {
   // Mods can reply to modmail threads using !r or !reply
@@ -13,11 +12,7 @@ module.exports = ({ bot, knex, config, commands }) => {
     }
 
     const replied = await thread.replyToUser(msg.member, args.text || "", msg.attachments, false);
-    if ( msg.channel.name.includes("🔴-")) await msg.channel.edit({name: msg.channel.name.replace("🔴-", "")})
-    if (replied) 
-    {
-      await msg.delete();
-    }
+    if (replied) msg.delete();
   }, {
     aliases: ["r"]
   });
